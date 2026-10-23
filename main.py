@@ -94,6 +94,41 @@ def cadastrar_novo_produto():
         while resposta1 not in opcoes:
             resposta1 = input("Resposta inválida! Responda somente com 'Sim' ou 'Não': ").lower()
 
+def editar_produto(produtos):
+    
+    opcoes = ["sim", "não", "nao"]
+
+    resposta2 = input("Você deseja editar um produto? (Sim/Não) ")
+    while resposta2 not in opcoes:
+       resposta2 = input("Resposta inválida! Responda somente com 'Sim' ou 'Não': ").lower()
+
+    while resposta2 == "sim":
+
+        id_edicao = int(input("Digite o ID do produto que será editado: "))
+
+        id_encontrado = False
+
+        for cada_item in produtos:
+            if cada_item['id'] == id_edicao:
+                nome_edit = input("Edite o nome do novo produto: ")
+                categoria_edit = input("Edite a categoria do produto: ")
+                preco_edit = float(input("Edite o preço do novo produto: ").replace(",", "."))
+                print("Obs.: Para editar a situação do estoque, vá nas opções 'Registrar chegada de produtos' ou 'Registrar saída de produtos'.")
+
+                cada_item['nome'] = nome_edit
+                cada_item['categoria'] = categoria_edit
+                cada_item['preco'] = preco_edit
+                salvar_produtos(produtos)
+                print(f"Informações do produto {id_edicao} atualizadas com sucesso!")
+                id_encontrado = True
+        
+        if not id_encontrado:
+            print("Produto não encontrado! Tente outro ID.")
+
+        resposta2 = input("Deseja cadastrar outro produto? (Sim/Não) ").lower()
+        while resposta2 not in opcoes:
+            resposta2 = input("Resposta inválida! Responda somente com 'Sim' ou 'Não': ").lower()
+
 produtos = carregar_produtos()
 
 while True:
@@ -102,6 +137,7 @@ while True:
     print("2 - Registrar chegada de produtos")
     print("3 - Registrar saída de produtos")
     print("4 - Cadastrar novo produto")
+    print("5 - Editar produtos")
     print("0 - Sair")
 
     opcao = input("Escolha uma opção: ")
@@ -114,6 +150,8 @@ while True:
         registrar_saida(produtos)
     elif opcao == "4":
         cadastrar_novo_produto()
+    elif opcao == "5":
+        editar_produto(produtos)
     elif opcao == "0":
         print("Saindo do sistema...")
         break

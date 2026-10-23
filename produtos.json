@@ -92,9 +92,9 @@
     },
     {
         "id": 14,
-        "nome": "TESTE 03",
-        "categoria": "testando",
-        "preco": 200.0,
+        "nome": "NOME EDITADO",
+        "categoria": "CATEGORIA EDITADA",
+        "preco": 100.5,
         "estoque": 300
     }
 ]
