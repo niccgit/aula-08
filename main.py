@@ -30,7 +30,7 @@ def registrar_chegada(produtos):
             id_encontrado = True
 
     if not id_encontrado:
-        print("Produto não encontrado.")
+        print("Produto não encontrado! Tente outro ID.")
 
 def registrar_saida(produtos):
     
@@ -50,7 +50,7 @@ def registrar_saida(produtos):
                 id_encontrado = True
 
     if not id_encontrado:
-        print("Produto não encontrado.")
+        print("Produto não encontrado! Tente outro ID.")
 
 def cadastrar_novo_produto():
     
@@ -61,14 +61,15 @@ def cadastrar_novo_produto():
         resposta1 = input("Resposta inválida! Responda somente com 'Sim' ou 'Não': ").lower()
     
     while resposta1 == "sim":
-        id_adicao = int(input("Digite o ID do novo produto: "))
+
+        id_adicao = int(input("Digite um ID para o produto que será adicionado: "))
         
         id_existe = False
         
         for cada_item in produtos:
             if cada_item['id'] == id_adicao:
                 id_existe = True
-            
+
         if id_existe:
             print("Esse ID já existe! Escolha outro ID.")
         else:
@@ -85,9 +86,7 @@ def cadastrar_novo_produto():
                 'estoque': estoque_adicao
             }
             produtos.append(novo_produto)
-            
             salvar_produtos(produtos)
-            
             print("Novo produto adicionado com sucesso ao Relatório de Controle de Estoque!")
         
         resposta1 = input("Deseja cadastrar outro produto? (Sim/Não) ").lower()
@@ -110,9 +109,9 @@ def editar_produto(produtos):
 
         for cada_item in produtos:
             if cada_item['id'] == id_edicao:
-                nome_edit = input("Edite o nome do novo produto: ")
+                nome_edit = input("Edite o nome do produto: ")
                 categoria_edit = input("Edite a categoria do produto: ")
-                preco_edit = float(input("Edite o preço do novo produto: ").replace(",", "."))
+                preco_edit = float(input("Edite o preço do produto: ").replace(",", "."))
                 print("Obs.: Para editar a situação do estoque, vá nas opções 'Registrar chegada de produtos' ou 'Registrar saída de produtos'.")
 
                 cada_item['nome'] = nome_edit
