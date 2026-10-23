@@ -32,11 +32,76 @@ def registrar_chegada(produtos):
     if not id_encontrado:
         print("Produto não encontrado.")
 
+def registrar_saida(produtos):
+    
+    busca = int(input("Digite o ID do produto: "))
+    quantidade = int(input("Quantas unidades saíram? "))
+    
+    id_encontrado = False
+    
+    for cada_item in produtos:
+        if cada_item['id'] == busca:
+            if quantidade > cada_item['estoque']:
+                print(f"Não há produtos suficientes no estoque de {busca}.")
+            else:
+                cada_item['estoque'] -= quantidade
+                salvar_produtos(produtos)
+                print(f"Estoque do produto {busca} atualizado! Novo estoque: {cada_item['estoque']}")
+                id_encontrado = True
+
+    if not id_encontrado:
+        print("Produto não encontrado.")
+
+def cadastrar_novo_produto():
+    
+    opcoes = ["sim", "não", "nao"]
+    
+    resposta1 = input("Você deseja cadastrar um novo produto? (Sim/Não) ").lower()
+    while resposta1 not in opcoes:
+        resposta1 = input("Resposta inválida! Responda somente com 'Sim' ou 'Não': ").lower()
+    
+    while resposta1 == "sim":
+        id_adicao = int(input("Digite o ID do novo produto: "))
+        
+        id_existe = False
+        
+        for cada_item in produtos:
+            if cada_item['id'] == id_adicao:
+                id_existe = True
+            
+        if id_existe:
+            print("Esse ID já existe! Escolha outro ID.")
+        else:
+            nome_adicao = input("Digite o nome do novo produto: ")
+            categoria_adicao = input("Digite a categoria do novo produto: ")
+            preco_adicao = float(input("Digite o preço do novo produto: ").replace(",", "."))
+            estoque_adicao = int(input("Digite a quantidade em estoque: "))
+            
+            novo_produto = {
+                'id': id_adicao,
+                'nome': nome_adicao,
+                'categoria': categoria_adicao,
+                'preco': preco_adicao,
+                'estoque': estoque_adicao
+            }
+            produtos.append(novo_produto)
+            
+            salvar_produtos(produtos)
+            
+            print("Novo produto adicionado com sucesso ao Relatório de Controle de Estoque!")
+        
+        resposta1 = input("Deseja cadastrar outro produto? (Sim/Não) ").lower()
+        while resposta1 not in opcoes:
+            resposta1 = input("Resposta inválida! Responda somente com 'Sim' ou 'Não': ").lower()
+
 produtos = carregar_produtos()
 
 while True:
+
     print("1 - Mostrar Relatório de Controle de Estoque")
     print("2 - Registrar chegada de produtos")
+    print("3 - Registrar saída de produtos")
+    print("4 - Cadastrar novo produto")
     print("0 - Sair")
 
     opcao = input("Escolha uma opção: ")
@@ -45,7 +110,12 @@ while True:
         mostrar_lista(produtos)
     elif opcao == "2":
         registrar_chegada(produtos)
+    elif opcao == "3":
+        registrar_saida(produtos)
+    elif opcao == "4":
+        cadastrar_novo_produto()
     elif opcao == "0":
+        print("Saindo do sistema...")
         break
     else:
         print("Opção inválida!")
